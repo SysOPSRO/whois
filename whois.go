@@ -287,6 +287,7 @@ func getServer(data string) (string, string) {
 		"whois: ",
 		"ReferralServer: ",
 		"refer: ",
+		" Website: ", // this matches for sure the format of the EU whois
 		"%referral ", // e.g. %referral rwhois://root.rwhois.net:4321/auth-area=.
 	}
 
@@ -301,6 +302,7 @@ func getServer(data string) (string, string) {
 			server = strings.TrimPrefix(server, "whois:")
 			server = strings.TrimPrefix(server, "rwhois:")
 			server = strings.Trim(server, "/")
+			server = strings.Replace(server, "www.", "whois.", 1) // for BE,EU domains, most resellers will listen for whois on whois.DOMAIN:43
 			port := defaultWhoisPort
 			if strings.Contains(server, ":") {
 				v := strings.Split(server, ":")
